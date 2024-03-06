@@ -100,7 +100,7 @@ class Role(Plugin):
             return
         btype = Bridge().get_bot_type("chat")
         if btype not in [const.OPEN_AI, const.CHATGPT, const.CHATGPTONAZURE, const.LINKAI]:
-            return
+            return  ##后续加RAG4AI的对应知识库角色切换
         bot = Bridge().get_bot("chat")
         content = e_context["context"].content[:]
         clist = e_context["context"].content.split(maxsplit=1)

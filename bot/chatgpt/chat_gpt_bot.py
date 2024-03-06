@@ -3,8 +3,9 @@
 import time
 
 import openai
-import openai.error
+#import openai.error
 import requests
+from openai import OpenAI
 
 from bot.bot import Bot
 from bot.chatgpt.chat_gpt_session import ChatGPTSession
@@ -16,18 +17,21 @@ from common.log import logger
 from common.token_bucket import TokenBucket
 from config import conf, load_config
 
-
+client = OpenAI()
 # OpenAI对话模型API (可用)
 class ChatGPTBot(Bot, OpenAIImage):
+
     def __init__(self):
         super().__init__()
         # set the default api_key
-        openai.api_key = conf().get("open_ai_api_key")
-        if conf().get("open_ai_api_base"):
-            openai.api_base = conf().get("open_ai_api_base")
-        proxy = conf().get("proxy")
-        if proxy:
-            openai.proxy = proxy
+        client.api_key = conf().get("open_ai_api_key")
+
+        # openai.api_key = conf().get("open_ai_api_key")
+        # if conf().get("open_ai_api_base"):
+        #     openai.api_base = conf().get("open_ai_api_base")
+        # proxy = conf().get("proxy")
+        # if proxy:
+        #     openai.proxy = proxy
         if conf().get("rate_limit_chatgpt"):
             self.tb4chatgpt = TokenBucket(conf().get("rate_limit_chatgpt", 20))
 
@@ -39,15 +43,14 @@ class ChatGPTBot(Bot, OpenAIImage):
             "top_p": conf().get("top_p", 1),
             "frequency_penalty": conf().get("frequency_penalty", 0.0),  # [-2,2]之间，该值越大则更倾向于产生不同的内容
             "presence_penalty": conf().get("presence_penalty", 0.0),  # [-2,2]之间，该值越大则更倾向于产生不同的内容
-            "request_timeout": conf().get("request_timeout", None),  # 请求超时时间，openai接口默认设置为600，对于难问题一般需要较长时间
-            "timeout": conf().get("request_timeout", None),  # 重试超时时间，在这个时间内，将会自动重试
+            #"request_timeout": conf().get("request_timeout", None),  # 请求超时时间，openai接口默认设置为600，对于难问题一般需要较长时间
+            #"timeout": conf().get("request_timeout", None),  # 重试超时时间，在这个时间内，将会自动重试
         }
 
     def reply(self, query, context=None):
         # acquire reply content
         if context.type == ContextType.TEXT:
             logger.info("[CHATGPT] query={}".format(query))
-
             session_id = context["session_id"]
             reply = None
             clear_memory_commands = conf().get("clear_memory_commands", ["#清除记忆"])
@@ -60,40 +63,40 @@ class ChatGPTBot(Bot, OpenAIImage):
             elif query == "#更新配置":
                 load_config()
                 reply = Reply(ReplyType.INFO, "配置已更新")
-            if reply:
-                return reply
-            session = self.sessions.session_query(query, session_id)
-            logger.debug("[CHATGPT] session query={}".format(session.messages))
-
-            api_key = context.get("openai_api_key")
-            model = context.get("gpt_model")
-            new_args = None
-            if model:
-                new_args = self.args.copy()
-                new_args["model"] = model
-            # if context.get('stream'):
-            #     # reply in stream
-            #     return self.reply_text_stream(query, new_query, session_id)
-
-            reply_content = self.reply_text(session, api_key, args=new_args)
-            logger.debug(
-                "[CHATGPT] new_query={}, session_id={}, reply_cont={}, completion_tokens={}".format(
-                    session.messages,
-                    session_id,
-                    reply_content["content"],
-                    reply_content["completion_tokens"],
-                )
-            )
-            if reply_content["completion_tokens"] == 0 and len(reply_content["content"]) > 0:
-                reply = Reply(ReplyType.ERROR, reply_content["content"])
-            elif reply_content["completion_tokens"] > 0:
-                self.sessions.session_reply(reply_content["content"], session_id, reply_content["total_tokens"])
-                reply = Reply(ReplyType.TEXT, reply_content["content"])
             else:
-                reply = Reply(ReplyType.ERROR, reply_content["content"])
-                logger.debug("[CHATGPT] reply {} used 0 tokens.".format(reply_content))
-            return reply
+            # if reply:
+            #     return reply
+                session = self.sessions.session_query(query, session_id)
+                logger.debug("[CHATGPT] session query={}".format(session.messages))
 
+                api_key = context.get("openai_api_key")
+                model = context.get("gpt_model")
+                new_args = None
+                if model:
+                    new_args = self.args.copy()
+                    new_args["model"] = model
+                # if context.get('stream'):
+                #     # reply in stream
+                #     return self.reply_text_stream(query, new_query, session_id)
+
+                reply_content = self.reply_text(session, api_key, args=new_args)
+                logger.debug(
+                    "[CHATGPT] new_query={}, session_id={}, reply_cont={}, completion_tokens={}".format(
+                        session.messages,
+                        session_id,
+                        reply_content["content"],
+                        reply_content["completion_tokens"],
+                    )
+                )
+                if reply_content["completion_tokens"] == 0 and len(reply_content["content"]) > 0:
+                    reply = Reply(ReplyType.ERROR, reply_content["content"])
+                elif reply_content["completion_tokens"] > 0:
+                    self.sessions.session_reply(reply_content["content"], session_id, reply_content["total_tokens"])
+                    reply = Reply(ReplyType.TEXT, reply_content["content"])
+                else:
+                    reply = Reply(ReplyType.ERROR, reply_content["content"])
+                    logger.debug("[CHATGPT] reply {} used 0 tokens.".format(reply_content))
+            return reply
         elif context.type == ContextType.IMAGE_CREATE:
             ok, retstring = self.create_img(query, 0)
             reply = None
@@ -116,37 +119,38 @@ class ChatGPTBot(Bot, OpenAIImage):
         """
         try:
             if conf().get("rate_limit_chatgpt") and not self.tb4chatgpt.get_token():
-                raise openai.error.RateLimitError("RateLimitError: rate limit exceeded")
+                raise openai.RateLimitError("RateLimitError: rate limit exceeded")
             # if api_key == None, the default openai.api_key will be used
             if args is None:
                 args = self.args
-            response = openai.ChatCompletion.create(api_key=api_key, messages=session.messages, **args)
+            # response = client.chat.completions.create(api_key=api_key, messages=session.messages, **args)
+            response = client.chat.completions.create(messages=session.messages,**args)
             # logger.debug("[CHATGPT] response={}".format(response))
-            # logger.info("[ChatGPT] reply={}, total_tokens={}".format(response.choices[0]['message']['content'], response["usage"]["total_tokens"]))
+            # logger.info("[ChatGPT] reply={}, total_tokens={}".format(response.choices[0].message.content, response.usage.total_tokens))
             return {
-                "total_tokens": response["usage"]["total_tokens"],
-                "completion_tokens": response["usage"]["completion_tokens"],
-                "content": response.choices[0]["message"]["content"],
+                "total_tokens": response.usage.total_tokens,
+                "completion_tokens": response.usage.completion_tokens,
+                "content": response.choices[0].message.content,
             }
         except Exception as e:
             need_retry = retry_count < 2
             result = {"completion_tokens": 0, "content": "我现在有点累了，等会再来吧"}
-            if isinstance(e, openai.error.RateLimitError):
+            if isinstance(e, openai.RateLimitError):
                 logger.warn("[CHATGPT] RateLimitError: {}".format(e))
                 result["content"] = "提问太快啦，请休息一下再问我吧"
                 if need_retry:
                     time.sleep(20)
-            elif isinstance(e, openai.error.Timeout):
+            elif isinstance(e, openai.Timeout):
                 logger.warn("[CHATGPT] Timeout: {}".format(e))
                 result["content"] = "我没有收到你的消息"
                 if need_retry:
                     time.sleep(5)
-            elif isinstance(e, openai.error.APIError):
+            elif isinstance(e, openai.APIError):
                 logger.warn("[CHATGPT] Bad Gateway: {}".format(e))
                 result["content"] = "请再问我一次"
                 if need_retry:
                     time.sleep(10)
-            elif isinstance(e, openai.error.APIConnectionError):
+            elif isinstance(e, openai.APIConnectionError):
                 logger.warn("[CHATGPT] APIConnectionError: {}".format(e))
                 result["content"] = "我连接不到你的网络"
                 if need_retry:

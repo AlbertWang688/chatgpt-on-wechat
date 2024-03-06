@@ -145,6 +145,7 @@ class ChatChannel(Channel):
                 else:
                     return None
             content = content.strip()
+            # 检查输入内容是否包含image_create_prefix中的前缀，如果包含，将content中的前缀删除
             img_match_prefix = check_prefix(content, conf().get("image_create_prefix"))
             if img_match_prefix:
                 content = content.replace(img_match_prefix, "", 1)

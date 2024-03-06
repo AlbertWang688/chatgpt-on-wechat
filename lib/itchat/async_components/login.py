@@ -75,7 +75,7 @@ async def login(self, enableCmdQR=False, picDir=None, qrCallback=None, EventScan
                 await asyncio.sleep(0.1)
             elif status == '201':
                 if isLoggedIn is not None:
-                    logger.info('Please press confirm on your phone.')
+                    logger.info('请在你手机上点击确认登录.')
                     isLoggedIn = None
                     payload = EventScanPayload(
                         status=ScanStatus.Waiting,

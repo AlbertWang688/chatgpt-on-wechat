@@ -11,10 +11,10 @@ from common.log import logger
 # 此处的配置值无实际意义，程序不会读取此处的配置，仅用于提示格式，请将配置加入到config.json中
 available_setting = {
     # openai api配置
-    "open_ai_api_key": "",  # openai api key
+    "open_ai_api_key": "sk-xxxxxxxxxx",  # openai api key
     # openai apibase，当use_azure_chatgpt为true时，需要设置对应的api base
     "open_ai_api_base": "https://api.openai.com/v1",
-    "proxy": "",  # openai使用的代理
+    "proxy": "127.0.0.1:7890",  # openai使用的代理
     # chatgpt模型， 当use_azure_chatgpt为true时，其名称为Azure上model deployment名称
     "model": "gpt-3.5-turbo",  # 还支持 gpt-4, gpt-4-turbo, wenxin, xunfei, qwen
     "use_azure_chatgpt": False,  # 是否使用azure的chatgpt
@@ -30,7 +30,7 @@ available_setting = {
     "group_chat_keyword": [],  # 群聊时包含该关键词则会触发机器人回复
     "group_at_off": False,  # 是否关闭群聊时@bot的触发
     "group_name_white_list": ["ChatGPT测试群", "ChatGPT测试群2"],  # 开启自动回复的群名称列表
-    "group_name_keyword_white_list": [],  # 开启自动回复的群名称关键词列表
+    "group_name_keyword_white_list": ["ChatGPT测试群","蜂享家"],  # 开启自动回复的群名称关键词列表
     "group_chat_in_one_session": ["ChatGPT测试群"],  # 支持会话上下文共享的群名称
     "nick_name_black_list": [],  # 用户昵称黑名单
     "group_welcome_msg": "",  # 配置新人进群固定欢迎语，不配置则使用随机风格欢迎 
@@ -58,8 +58,8 @@ available_setting = {
     "timeout": 120,  # chatgpt重试超时时间，在这个时间内，将会自动重试
     # Baidu 文心一言参数
     "baidu_wenxin_model": "eb-instant",  # 默认使用ERNIE-Bot-turbo模型
-    "baidu_wenxin_api_key": "",  # Baidu api key
-    "baidu_wenxin_secret_key": "",  # Baidu secret key
+    "baidu_wenxin_api_key": "DviQiO2DAG7GKfy42dlSAsNl",  # Baidu api key
+    "baidu_wenxin_secret_key": "zTwQuckY10aMZP4c6cutHiGBKO1NXiaw",  # Baidu secret key
     # 讯飞星火API
     "xunfei_app_id": "",  # 讯飞应用ID
     "xunfei_api_key": "",  # 讯飞 API key
@@ -140,7 +140,7 @@ available_setting = {
     # chatgpt指令自定义触发词
     "clear_memory_commands": ["#清除记忆"],  # 重置会话指令，必须以#开头
     # channel配置
-    "channel_type": "wx",  # 通道类型，支持：{wx,wxy,terminal,wechatmp,wechatmp_service,wechatcom_app}
+    "channel_type": "wx",  # 通道类型，支持：{wx:微信个人号,wxy,terminal：终端,wechatmp：微信公众订阅号,wechatmp_service：微信公众服务号,wechatcom_app：微信企业号}
     "subscribe_msg": "",  # 订阅消息, 支持: wechatmp, wechatmp_service, wechatcom_app
     "debug": False,  # 是否开启debug模式，开启后会打印更多日志
     "appdata_dir": "",  # 数据目录
@@ -149,10 +149,20 @@ available_setting = {
     # 是否使用全局插件配置
     "use_global_plugin_config": False,
     # 知识库平台配置
+    "use_RAG": True,
     "use_linkai": False,
     "linkai_api_key": "",
     "linkai_app_code": "",
     "linkai_api_base": "https://api.link-ai.chat",  # linkAI服务地址，若国内无法访问或延迟较高可改为 https://api.link-ai.tech
+
+    "tools": ["bing-search", "morning-news", "你想要添加的其他工具"], 
+    "kwargs": {
+        "debug": True, 
+        "request_timeout": 120,
+        "no_default": False, 
+        "bing_subscription_key": "4871f273a4804743",
+        "morning_news_api_key": "pj5zQP3Vw6Ic0sL1"
+    }
 }
 
 
@@ -212,7 +222,6 @@ class Config(dict):
 
 config = Config()
 
-
 def load_config():
     global config
     config_path = "./config.json"
@@ -240,7 +249,7 @@ def load_config():
                 elif value == "true":
                     config[name] = True
                 else:
-                    config[name] = value
+                    config[name] = value 
 
     if config.get("debug", False):
         logger.setLevel(logging.DEBUG)
@@ -302,6 +311,8 @@ def pconf(plugin_name: str) -> dict:
 
 
 # 全局配置，用于存放全局生效的状态
+# albert add : godcmd.py-> __init__ -> password 未给值则自动产生临时口令
 global_config = {
-    "admin_users": []
+    "admin_users": [],
+    "password": ""
 }

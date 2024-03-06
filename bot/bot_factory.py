@@ -39,6 +39,10 @@ def create_bot(bot_type):
     elif bot_type == const.LINKAI:
         from bot.linkai.link_ai_bot import LinkAIBot
         return LinkAIBot()
+    
+    elif bot_type == const.RAG4AI:
+        from bot.rag4AI.rag_ai_bot import rag4AI
+        return rag4AI()
 
     elif bot_type == const.CLAUDEAI:
         from bot.claude.claude_ai_bot import ClaudeAIBot

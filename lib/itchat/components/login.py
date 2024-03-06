@@ -66,7 +66,7 @@ def login(self, enableCmdQR=False, picDir=None, qrCallback=None,
                 isLoggedIn = True
             elif status == '201':
                 if isLoggedIn is not None:
-                    logger.info('Please press confirm on your phone.')
+                    logger.info('请在你手机上点击确认登录。')
                     isLoggedIn = None
                     time.sleep(7)
                 time.sleep(0.5)

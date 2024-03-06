@@ -37,3 +37,8 @@ linkai
 
 # dingtalk
 dingtalk_stream
+
+# other add
+silk-python
+selenium
+docx2txt
