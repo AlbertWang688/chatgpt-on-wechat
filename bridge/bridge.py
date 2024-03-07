@@ -19,6 +19,7 @@ class Bridge(object):
             "translate": conf().get("translate", "baidu"),
         }
         model_type = conf().get("model") or const.GPT35
+<<<<<<< HEAD
         # if model_type in ["text-davinci-003"]:
         #     self.btype["chat"] = const.OPEN_AI
         # if conf().get("use_azure_chatgpt", False):
@@ -53,6 +54,22 @@ class Bridge(object):
         except Exception as e:
                 # 假设这里我们简单打印异常，实际应用中可能需要更复杂的错误处理逻辑
                 print(f"Error retrieving use_azure_chatgpt flag: {e}")
+=======
+        if model_type in ["text-davinci-003"]:
+            self.btype["chat"] = const.OPEN_AI
+        if conf().get("use_azure_chatgpt", False):
+            self.btype["chat"] = const.CHATGPTONAZURE
+        if model_type in ["wenxin", "wenxin-4"]:
+            self.btype["chat"] = const.BAIDU
+        if model_type in ["xunfei"]:
+            self.btype["chat"] = const.XUNFEI
+        if model_type in [const.QWEN]:
+            self.btype["chat"] = const.QWEN
+        if model_type in [const.GEMINI]:
+            self.btype["chat"] = const.GEMINI
+        if model_type in [const.ZHIPU_AI]:
+            self.btype["chat"] = const.ZHIPU_AI
+>>>>>>> 2812a5026cef35c71a36eacb7acfcd599ab317d1
 
 
         # if conf().get("use_linkai") and conf().get("linkai_api_key"):

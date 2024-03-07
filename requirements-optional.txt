@@ -33,12 +33,17 @@ broadscope_bailian
 google-generativeai
 
 # linkai
-linkai
+linkai>=0.0.3.5
 
 # dingtalk
 dingtalk_stream
 
+<<<<<<< HEAD
 # other add
 silk-python
 selenium
 docx2txt
+=======
+# zhipuai
+zhipuai>=2.0.1
+>>>>>>> 2812a5026cef35c71a36eacb7acfcd599ab317d1

@@ -1,0 +1,1403 @@
+
+        <html xmlns:v="urn:schemas-microsoft-com:vml"
+        xmlns:o="urn:schemas-microsoft-com:office:office"
+        xmlns:w="urn:schemas-microsoft-com:office:word"
+        xmlns="http://www.w3.org/TR/REC-html40">
+        <head><meta http-equiv=Content-Type content="text/html;  
+        charset=utf-8">
+        <style type="text/css">
+            table  
+            {  
+                border-collapse: collapse;
+                border: none;  
+                width: 100%;  
+            }  
+            td  
+            {  
+                border: solid #CCC 1px;  
+            }  
+            .codestyle{
+                word-break: break-all;
+                background:silver;mso-highlight:silver;
+            }
+        </style>
+        <meta name=ProgId content=Word.Document>
+        <meta name=Generator content="Microsoft Word 11">
+        <meta name=Originator content="Microsoft Word 11">
+        <xml><w:WordDocument><w:View>Print</w:View></xml></head>
+        <body><h1>远程控制-v2.3.3</h1><div style="margin-left:20px;"><h2>1、新增远控网关</h2><div style="margin-left:20px;"><p><strong>简要描述：</strong> </p>
+<ul>
+<li>新增远控网关</li>
+</ul>
+<p><strong>请求URL：</strong> </p>
+<ul>
+<li><code>http://xx.com/deviceRemoteGateway/add</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST </li>
+</ul>
+<p><strong>参数：</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">devFirm</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>设备厂商,字典表数据， 1-海湾 2-北大青鸟</td>
+</tr>
+<tr>
+<td style="text-align: left;">gatewayName</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>网关名称</td>
+</tr>
+<tr>
+<td style="text-align: left;">ip</td>
+<td style="text-align: left;">否</td>
+<td style="text-align: left;">string</td>
+<td>网关ip</td>
+</tr>
+<tr>
+<td style="text-align: left;">port</td>
+<td style="text-align: left;">否</td>
+<td style="text-align: left;">string</td>
+<td>网关端口</td>
+</tr>
+<tr>
+<td style="text-align: left;">otherPort</td>
+<td style="text-align: left;">否</td>
+<td style="text-align: left;">string</td>
+<td>多线盘端口</td>
+</tr>
+<tr>
+<td style="text-align: left;">username</td>
+<td style="text-align: left;">否</td>
+<td style="text-align: left;">string</td>
+<td>认证账号</td>
+</tr>
+<tr>
+<td style="text-align: left;">password</td>
+<td style="text-align: left;">否</td>
+<td style="text-align: left;">string</td>
+<td>密码</td>
+</tr>
+</tbody>
+</table>
+<table width='100%' class='codestyle'><pre><code>{
+    &quot;devFirm&quot;: &quot;S000101&quot;,
+    &quot;gatewayName&quot;: &quot;1号网关&quot;,
+    &quot;ip&quot;: &quot;192.168.1.123&quot;,
+    &quot;port&quot;: &quot;8090&quot;,
+    &quot;otherPort&quot;: &quot;9090&quot;,
+    &quot;username&quot;: &quot;test&quot;,
+    &quot;password&quot;: &quot;test&quot;
+}</code></pre></table>
+<p><strong>返回示例</strong></p>
+<table width='100%' class='codestyle'><pre><code>{
+    &quot;code&quot;: 200,
+    &quot;msg&quot;: &quot;成功&quot;,
+    &quot;data&quot;: 1,
+    &quot;success&quot;: true,
+    &quot;fail&quot;: false
+}</code></pre></table>
+<p><strong>返回参数说明</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+<p><strong>备注</strong> </p>
+<ul>
+<li>更多返回错误代码请看首页的错误代码描述</li>
+</ul>
+<p>欢迎使用ShowDoc！</p></div><h2>2、远控网关列表</h2><div style="margin-left:20px;"><p><strong>简要描述：</strong> </p>
+<ul>
+<li>远控网关列表</li>
+</ul>
+<p><strong>请求URL：</strong> </p>
+<ul>
+<li><code>http://localhost:8088/deviceRemoteGateway/queryByPage</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST </li>
+</ul>
+<p><strong>参数：</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">devFirm</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>设备厂商,字典表数据， S00004-海湾 S000101-北大青鸟</td>
+</tr>
+<tr>
+<td style="text-align: left;">ip</td>
+<td style="text-align: left;">否</td>
+<td style="text-align: left;">string</td>
+<td>网关ip</td>
+</tr>
+</tbody>
+</table>
+<table width='100%' class='codestyle'><pre><code>{
+    &quot;pageNum&quot;: 1
+}</code></pre></table>
+<p><strong>返回示例</strong></p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">devFirm</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>设备厂商,字典表数据， 1-海湾 2-北大青鸟</td>
+</tr>
+<tr>
+<td style="text-align: left;">gatewayName</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>网关名称</td>
+</tr>
+<tr>
+<td style="text-align: left;">ip</td>
+<td style="text-align: left;">否</td>
+<td style="text-align: left;">string</td>
+<td>网关ip</td>
+</tr>
+<tr>
+<td style="text-align: left;">port</td>
+<td style="text-align: left;">否</td>
+<td style="text-align: left;">string</td>
+<td>网关端口</td>
+</tr>
+<tr>
+<td style="text-align: left;">otherPort</td>
+<td style="text-align: left;">否</td>
+<td style="text-align: left;">string</td>
+<td>多线盘端口</td>
+</tr>
+<tr>
+<td style="text-align: left;">username</td>
+<td style="text-align: left;">否</td>
+<td style="text-align: left;">string</td>
+<td>认证账号</td>
+</tr>
+<tr>
+<td style="text-align: left;">password</td>
+<td style="text-align: left;">否</td>
+<td style="text-align: left;">string</td>
+<td>密码</td>
+</tr>
+<tr>
+<td style="text-align: left;">isOnline</td>
+<td style="text-align: left;">否</td>
+<td style="text-align: left;">string</td>
+<td>是否在离线(0:离线,1:在线)</td>
+</tr>
+<tr>
+<td style="text-align: left;">status</td>
+<td style="text-align: left;">否</td>
+<td style="text-align: left;">string</td>
+<td>禁用/启用(0:禁用,1:启用)</td>
+</tr>
+</tbody>
+</table>
+<table width='100%' class='codestyle'><pre><code>{
+    &quot;code&quot;: 200,
+    &quot;msg&quot;: &quot;查询成功&quot;,
+    &quot;data&quot;: {
+        &quot;pageNum&quot;: 1,
+        &quot;pageSize&quot;: 10,
+        &quot;dataCount&quot;: 26,
+        &quot;totalPage&quot;: 3,
+        &quot;startRow&quot;: 0,
+        &quot;pageData&quot;: [
+            {
+                &quot;pageNum&quot;: 1,
+                &quot;pageSize&quot;: 10,
+                &quot;supervisorPath&quot;: null,
+                &quot;dataBaseName&quot;: null,
+                &quot;startRow&quot;: null,
+                &quot;id&quot;: 3601465773611824,
+                &quot;remoteGatewayId&quot;: null,
+                &quot;devFirm&quot;: &quot;青鸟&quot;,
+                &quot;gatewayName&quot;: &quot;1号网关&quot;,
+                &quot;ip&quot;: &quot;192.168.1.123&quot;,
+                &quot;port&quot;: &quot;8090&quot;,
+                &quot;otherPort&quot;: &quot;9090&quot;,
+                &quot;username&quot;: &quot;test&quot;,
+                &quot;password&quot;: &quot;test&quot;,
+                &quot;isOnline&quot;: null,
+                &quot;status&quot;: null,
+                &quot;ownerId&quot;: null,
+                &quot;ownerType&quot;: null,
+                &quot;createUser&quot;: null,
+                &quot;createTime&quot;: null,
+                &quot;modifyTime&quot;: null
+            },
+            {
+                &quot;pageNum&quot;: 1,
+                &quot;pageSize&quot;: 10,
+                &quot;supervisorPath&quot;: null,
+                &quot;dataBaseName&quot;: null,
+                &quot;startRow&quot;: null,
+                &quot;id&quot;: 3601474027510576,
+                &quot;remoteGatewayId&quot;: null,
+                &quot;devFirm&quot;: &quot;1&quot;,
+                &quot;gatewayName&quot;: &quot;水压控制器&quot;,
+                &quot;ip&quot;: &quot;1558882444&quot;,
+                &quot;port&quot;: &quot;1558882444&quot;,
+                &quot;otherPort&quot;: &quot;1558882444&quot;,
+                &quot;username&quot;: &quot;1558882444&quot;,
+                &quot;password&quot;: &quot;1558882444&quot;,
+                &quot;isOnline&quot;: null,
+                &quot;status&quot;: null,
+                &quot;ownerId&quot;: null,
+                &quot;ownerType&quot;: null,
+                &quot;createUser&quot;: null,
+                &quot;createTime&quot;: null,
+                &quot;modifyTime&quot;: null
+            },
+            {
+                &quot;pageNum&quot;: 1,
+                &quot;pageSize&quot;: 10,
+                &quot;supervisorPath&quot;: null,
+                &quot;dataBaseName&quot;: null,
+                &quot;startRow&quot;: null,
+                &quot;id&quot;: 3601476415904560,
+                &quot;remoteGatewayId&quot;: null,
+                &quot;devFirm&quot;: &quot;1&quot;,
+                &quot;gatewayName&quot;: &quot;水压控制器&quot;,
+                &quot;ip&quot;: &quot;1558882444&quot;,
+                &quot;port&quot;: &quot;1558882444&quot;,
+                &quot;otherPort&quot;: &quot;1558882444&quot;,
+                &quot;username&quot;: &quot;1558882444&quot;,
+                &quot;password&quot;: &quot;1558882444&quot;,
+                &quot;isOnline&quot;: null,
+                &quot;status&quot;: null,
+                &quot;ownerId&quot;: null,
+                &quot;ownerType&quot;: null,
+                &quot;createUser&quot;: null,
+                &quot;createTime&quot;: null,
+                &quot;modifyTime&quot;: null
+            },
+            {
+                &quot;pageNum&quot;: 1,
+                &quot;pageSize&quot;: 10,
+                &quot;supervisorPath&quot;: null,
+                &quot;dataBaseName&quot;: null,
+                &quot;startRow&quot;: null,
+                &quot;id&quot;: 3601525552847664,
+                &quot;remoteGatewayId&quot;: null,
+                &quot;devFirm&quot;: &quot;青鸟&quot;,
+                &quot;gatewayName&quot;: &quot;1号网关&quot;,
+                &quot;ip&quot;: &quot;192.168.1.123&quot;,
+                &quot;port&quot;: &quot;8090&quot;,
+                &quot;otherPort&quot;: &quot;9090&quot;,
+                &quot;username&quot;: &quot;test&quot;,
+                &quot;password&quot;: &quot;test&quot;,
+                &quot;isOnline&quot;: null,
+                &quot;status&quot;: null,
+                &quot;ownerId&quot;: null,
+                &quot;ownerType&quot;: null,
+                &quot;createUser&quot;: null,
+                &quot;createTime&quot;: null,
+                &quot;modifyTime&quot;: null
+            },
+            {
+                &quot;pageNum&quot;: 1,
+                &quot;pageSize&quot;: 10,
+                &quot;supervisorPath&quot;: null,
+                &quot;dataBaseName&quot;: null,
+                &quot;startRow&quot;: null,
+                &quot;id&quot;: 3601529198648112,
+                &quot;remoteGatewayId&quot;: null,
+                &quot;devFirm&quot;: &quot;青鸟&quot;,
+                &quot;gatewayName&quot;: &quot;1号网关&quot;,
+                &quot;ip&quot;: &quot;192.168.1.123&quot;,
+                &quot;port&quot;: &quot;8090&quot;,
+                &quot;otherPort&quot;: &quot;9090&quot;,
+                &quot;username&quot;: &quot;test&quot;,
+                &quot;password&quot;: &quot;test&quot;,
+                &quot;isOnline&quot;: null,
+                &quot;status&quot;: null,
+                &quot;ownerId&quot;: null,
+                &quot;ownerType&quot;: null,
+                &quot;createUser&quot;: null,
+                &quot;createTime&quot;: null,
+                &quot;modifyTime&quot;: null
+            },
+            {
+                &quot;pageNum&quot;: 1,
+                &quot;pageSize&quot;: 10,
+                &quot;supervisorPath&quot;: null,
+                &quot;dataBaseName&quot;: null,
+                &quot;startRow&quot;: null,
+                &quot;id&quot;: 3601531479071536,
+                &quot;remoteGatewayId&quot;: null,
+                &quot;devFirm&quot;: &quot;1&quot;,
+                &quot;gatewayName&quot;: &quot;水压控制器&quot;,
+                &quot;ip&quot;: &quot;155588888&quot;,
+                &quot;port&quot;: &quot;15555&quot;,
+                &quot;otherPort&quot;: &quot;12222&quot;,
+                &quot;username&quot;: &quot;15588882444&quot;,
+                &quot;password&quot;: &quot;999999&quot;,
+                &quot;isOnline&quot;: null,
+                &quot;status&quot;: null,
+                &quot;ownerId&quot;: null,
+                &quot;ownerType&quot;: null,
+                &quot;createUser&quot;: null,
+                &quot;createTime&quot;: null,
+                &quot;modifyTime&quot;: null
+            },
+            {
+                &quot;pageNum&quot;: 1,
+                &quot;pageSize&quot;: 10,
+                &quot;supervisorPath&quot;: null,
+                &quot;dataBaseName&quot;: null,
+                &quot;startRow&quot;: null,
+                &quot;id&quot;: 3601531738970928,
+                &quot;remoteGatewayId&quot;: null,
+                &quot;devFirm&quot;: &quot;1&quot;,
+                &quot;gatewayName&quot;: &quot;水压控制器&quot;,
+                &quot;ip&quot;: &quot;155588888&quot;,
+                &quot;port&quot;: &quot;15555&quot;,
+                &quot;otherPort&quot;: &quot;12222&quot;,
+                &quot;username&quot;: &quot;15588882444&quot;,
+                &quot;password&quot;: &quot;999999&quot;,
+                &quot;isOnline&quot;: null,
+                &quot;status&quot;: null,
+                &quot;ownerId&quot;: null,
+                &quot;ownerType&quot;: null,
+                &quot;createUser&quot;: null,
+                &quot;createTime&quot;: null,
+                &quot;modifyTime&quot;: null
+            },
+            {
+                &quot;pageNum&quot;: 1,
+                &quot;pageSize&quot;: 10,
+                &quot;supervisorPath&quot;: null,
+                &quot;dataBaseName&quot;: null,
+                &quot;startRow&quot;: null,
+                &quot;id&quot;: 3601532349471536,
+                &quot;remoteGatewayId&quot;: null,
+                &quot;devFirm&quot;: &quot;1&quot;,
+                &quot;gatewayName&quot;: &quot;水压控制器&quot;,
+                &quot;ip&quot;: &quot;155588888&quot;,
+                &quot;port&quot;: &quot;15555&quot;,
+                &quot;otherPort&quot;: &quot;12222&quot;,
+                &quot;username&quot;: &quot;15588882444&quot;,
+                &quot;password&quot;: &quot;999999&quot;,
+                &quot;isOnline&quot;: null,
+                &quot;status&quot;: null,
+                &quot;ownerId&quot;: null,
+                &quot;ownerType&quot;: null,
+                &quot;createUser&quot;: null,
+                &quot;createTime&quot;: null,
+                &quot;modifyTime&quot;: null
+            },
+            {
+                &quot;pageNum&quot;: 1,
+                &quot;pageSize&quot;: 10,
+                &quot;supervisorPath&quot;: null,
+                &quot;dataBaseName&quot;: null,
+                &quot;startRow&quot;: null,
+                &quot;id&quot;: 3601539707968304,
+                &quot;remoteGatewayId&quot;: null,
+                &quot;devFirm&quot;: &quot;1&quot;,
+                &quot;gatewayName&quot;: &quot;水压控制器&quot;,
+                &quot;ip&quot;: &quot;192.168.1.123&quot;,
+                &quot;port&quot;: &quot;8090&quot;,
+                &quot;otherPort&quot;: &quot;9090&quot;,
+                &quot;username&quot;: &quot;test&quot;,
+                &quot;password&quot;: &quot;test&quot;,
+                &quot;isOnline&quot;: null,
+                &quot;status&quot;: null,
+                &quot;ownerId&quot;: null,
+                &quot;ownerType&quot;: null,
+                &quot;createUser&quot;: null,
+                &quot;createTime&quot;: null,
+                &quot;modifyTime&quot;: null
+            },
+            {
+                &quot;pageNum&quot;: 1,
+                &quot;pageSize&quot;: 10,
+                &quot;supervisorPath&quot;: null,
+                &quot;dataBaseName&quot;: null,
+                &quot;startRow&quot;: null,
+                &quot;id&quot;: 3601539777600304,
+                &quot;remoteGatewayId&quot;: null,
+                &quot;devFirm&quot;: &quot;1&quot;,
+                &quot;gatewayName&quot;: &quot;水压控制器&quot;,
+                &quot;ip&quot;: &quot;192.168.1.123&quot;,
+                &quot;port&quot;: &quot;8090&quot;,
+                &quot;otherPort&quot;: &quot;9090&quot;,
+                &quot;username&quot;: &quot;test&quot;,
+                &quot;password&quot;: &quot;test&quot;,
+                &quot;isOnline&quot;: null,
+                &quot;status&quot;: null,
+                &quot;ownerId&quot;: null,
+                &quot;ownerType&quot;: null,
+                &quot;createUser&quot;: null,
+                &quot;createTime&quot;: null,
+                &quot;modifyTime&quot;: null
+            }
+        ]
+    },
+    &quot;success&quot;: true,
+    &quot;fail&quot;: false
+}</code></pre></table>
+<p><strong>返回参数说明</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+<p><strong>备注</strong> </p>
+<ul>
+<li>更多返回错误代码请看首页的错误代码描述</li>
+</ul>
+<p>欢迎使用ShowDoc！</p></div><h2>3、删除远控网关</h2><div style="margin-left:20px;"><p><strong>简要描述：</strong> </p>
+<ul>
+<li>删除远控网关</li>
+</ul>
+<p><strong>请求URL：</strong> </p>
+<ul>
+<li><code>http://localhost:8088/deviceRemoteGateway/deleteById</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST </li>
+</ul>
+<p><strong>参数：</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>删除id</td>
+</tr>
+</tbody>
+</table>
+<table width='100%' class='codestyle'><pre><code>{
+    &quot;id&quot;: 1
+}</code></pre></table>
+<p><strong>返回示例</strong></p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+<p><strong>返回参数说明</strong> </p>
+<table width='100%' class='codestyle'><pre><code>{
+    &quot;code&quot;: 200,
+    &quot;msg&quot;: &quot;删除成功&quot;,
+    &quot;data&quot;: true,
+    &quot;success&quot;: true,
+    &quot;fail&quot;: false
+}</code></pre></table>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+<p><strong>备注</strong> </p>
+<ul>
+<li>更多返回错误代码请看首页的错误代码描述</li>
+</ul>
+<p>欢迎使用ShowDoc！</p></div><h2>4、禁启用远控网关</h2><div style="margin-left:20px;"><p><strong>简要描述：</strong> </p>
+<ul>
+<li>禁启用远控网关</li>
+</ul>
+<p><strong>请求URL：</strong> </p>
+<ul>
+<li><code>http://localhost:8088/deviceRemoteGateway/changleStatus</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST </li>
+</ul>
+<p><strong>参数：</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>删除id</td>
+</tr>
+<tr>
+<td style="text-align: left;">status</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>禁用/启用(0:禁用,1:启用)</td>
+</tr>
+</tbody>
+</table>
+<table width='100%' class='codestyle'><pre><code>{
+    &quot;id&quot;: 1,
+    &quot;status&quot;: &quot;1&quot;
+}</code></pre></table>
+<p><strong>返回示例</strong></p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+<p><strong>返回参数说明</strong> </p>
+<table width='100%' class='codestyle'><pre><code>{
+    &quot;code&quot;: 200,
+    &quot;msg&quot;: &quot;修改成功&quot;,
+    &quot;data&quot;: true,
+    &quot;success&quot;: true,
+    &quot;fail&quot;: false
+}</code></pre></table>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+<p><strong>备注</strong> </p>
+<ul>
+<li>更多返回错误代码请看首页的错误代码描述</li>
+</ul>
+<p>欢迎使用ShowDoc！</p></div><h2>5、修改远控网关</h2><div style="margin-left:20px;"><p><strong>简要描述：</strong> </p>
+<ul>
+<li>修改远控网关</li>
+</ul>
+<p><strong>请求URL：</strong> </p>
+<ul>
+<li><code>http://xx.com/deviceRemoteGateway/edit</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST </li>
+</ul>
+<p><strong>参数：</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">否</td>
+<td style="text-align: left;">long</td>
+<td>id</td>
+</tr>
+<tr>
+<td style="text-align: left;">devFirm</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>设备厂商,字典表数据， 1-海湾 2-北大青鸟</td>
+</tr>
+<tr>
+<td style="text-align: left;">gatewayName</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>网关名称</td>
+</tr>
+<tr>
+<td style="text-align: left;">ip</td>
+<td style="text-align: left;">否</td>
+<td style="text-align: left;">string</td>
+<td>网关ip</td>
+</tr>
+<tr>
+<td style="text-align: left;">port</td>
+<td style="text-align: left;">否</td>
+<td style="text-align: left;">string</td>
+<td>网关端口</td>
+</tr>
+<tr>
+<td style="text-align: left;">otherPort</td>
+<td style="text-align: left;">否</td>
+<td style="text-align: left;">string</td>
+<td>多线盘端口</td>
+</tr>
+<tr>
+<td style="text-align: left;">username</td>
+<td style="text-align: left;">否</td>
+<td style="text-align: left;">string</td>
+<td>认证账号</td>
+</tr>
+<tr>
+<td style="text-align: left;">password</td>
+<td style="text-align: left;">否</td>
+<td style="text-align: left;">string</td>
+<td>密码</td>
+</tr>
+</tbody>
+</table>
+<table width='100%' class='codestyle'><pre><code>{
+    &quot;devFirm&quot;: &quot;S000101&quot;,
+    &quot;gatewayName&quot;: &quot;1号网关&quot;,
+    &quot;ip&quot;: &quot;192.168.1.123&quot;,
+    &quot;port&quot;: &quot;8090&quot;,
+    &quot;otherPort&quot;: &quot;9090&quot;,
+    &quot;username&quot;: &quot;test&quot;,
+    &quot;password&quot;: &quot;test&quot;
+}</code></pre></table>
+<p><strong>返回示例</strong></p>
+<table width='100%' class='codestyle'><pre><code>{
+    &quot;code&quot;: 200,
+    &quot;msg&quot;: &quot;修改成功&quot;,
+    &quot;data&quot;: 1,
+    &quot;success&quot;: true,
+    &quot;fail&quot;: false
+}</code></pre></table>
+<p><strong>返回参数说明</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+<p><strong>备注</strong> </p>
+<ul>
+<li>更多返回错误代码请看首页的错误代码描述</li>
+</ul>
+<p>欢迎使用ShowDoc！</p></div><h2>6、远控网关详情</h2><div style="margin-left:20px;"><p><strong>简要描述：</strong> </p>
+<ul>
+<li>远控网关详情</li>
+</ul>
+<p><strong>请求URL：</strong> </p>
+<ul>
+<li><code>http://localhost:8088/deviceRemoteGateway/queryById?id=3601645346544432</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST </li>
+</ul>
+<p><strong>参数：</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>id</td>
+</tr>
+</tbody>
+</table>
+<table width='100%' class='codestyle'><pre><code></code></pre></table>
+<p><strong>返回示例</strong></p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+<p><strong>返回参数说明</strong> </p>
+<table width='100%' class='codestyle'><pre><code>{
+    &quot;code&quot;: 200,
+    &quot;msg&quot;: &quot;查询成功&quot;,
+    &quot;data&quot;: {
+        &quot;pageNum&quot;: 1,
+        &quot;pageSize&quot;: 10,
+        &quot;supervisorPath&quot;: null,
+        &quot;dataBaseName&quot;: null,
+        &quot;startRow&quot;: null,
+        &quot;id&quot;: 3601645346544432,
+        &quot;remoteGatewayId&quot;: &quot;c67f715e-c633-4951-8e27-77259e0fc8e7&quot;,
+        &quot;devFirm&quot;: &quot;S000101&quot;,
+        &quot;gatewayName&quot;: &quot;3号网关&quot;,
+        &quot;ip&quot;: &quot;192.168.1.122&quot;,
+        &quot;port&quot;: &quot;8090&quot;,
+        &quot;otherPort&quot;: &quot;9090&quot;,
+        &quot;username&quot;: &quot;test&quot;,
+        &quot;password&quot;: &quot;test&quot;,
+        &quot;isOnline&quot;: 0,
+        &quot;status&quot;: &quot;1&quot;,
+        &quot;ownerId&quot;: null,
+        &quot;ownerType&quot;: null,
+        &quot;createUser&quot;: null,
+        &quot;createTime&quot;: null,
+        &quot;modifyTime&quot;: null
+    },
+    &quot;success&quot;: true,
+    &quot;fail&quot;: false
+}</code></pre></table>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+<p><strong>备注</strong> </p>
+<ul>
+<li>更多返回错误代码请看首页的错误代码描述</li>
+</ul>
+<p>欢迎使用ShowDoc！</p></div><h2>7、添加远控设备类型配置</h2><div style="margin-left:20px;"><p><strong>简要描述：</strong> </p>
+<ul>
+<li>添加远控设备类型配置</li>
+</ul>
+<p><strong>请求URL：</strong> </p>
+<ul>
+<li><code>http://xx.com/webDeviceRemoteCommand/add</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST </li>
+</ul>
+<p><strong>参数：</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">devFirmName</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>厂商设备名称</td>
+</tr>
+<tr>
+<td style="text-align: left;">devFirm</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>厂商设备Key(对应字典表)</td>
+</tr>
+<tr>
+<td style="text-align: left;">devFirmModel</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>厂商设备型号</td>
+</tr>
+<tr>
+<td style="text-align: left;">systemDefineld</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>系统类型</td>
+</tr>
+<tr>
+<td style="text-align: left;">deviceModel</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>设备型号</td>
+</tr>
+<tr>
+<td style="text-align: left;">devTypeDefineId</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">long</td>
+<td>设备类型id</td>
+</tr>
+<tr>
+<td style="text-align: left;">devTypeDefineName</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>设备类型名称</td>
+</tr>
+<tr>
+<td style="text-align: left;">cmd</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>支持的远程控制指令，用逗号连接多个指令（字典表管理）</td>
+</tr>
+</tbody>
+</table>
+<table width='100%' class='codestyle'><pre><code>{
+    &quot;devFirmName&quot;: &quot;北大青鸟消防设备有限公司&quot;,
+    &quot;devFirm&quot;: &quot;S000101&quot;,
+    &quot;devFirmModel&quot;: &quot;PTCGD&quot;,
+    &quot;deviceModel&quot; : &quot;JY-KBR2&quot;,
+    &quot;srcDevTypeDefineId&quot; : &quot;&quot;,
+    &quot;devTypeDefineId&quot; : &quot;255&quot;,
+    &quot;devTypeDefineName&quot; : &quot;消火栓按钮&quot;,
+    &quot;cmd&quot; : &quot;10,20,30&quot;
+}</code></pre></table>
+<p><strong>返回示例</strong></p>
+<table width='100%' class='codestyle'><pre><code>{
+    &quot;code&quot;: 200,
+    &quot;msg&quot;: &quot;添加成功&quot;,
+    &quot;data&quot;: {
+        &quot;pageNum&quot;: 1,
+        &quot;pageSize&quot;: 10,
+        &quot;supervisorPath&quot;: null,
+        &quot;dataBaseName&quot;: null,
+        &quot;startRow&quot;: null,
+        &quot;id&quot;: 3603140548205360,
+        &quot;devFirmName&quot;: &quot;北大青鸟消防设备有限公司&quot;,
+        &quot;devFirm&quot;: &quot;S000101&quot;,
+        &quot;deviceModel&quot;: &quot;JY-KBR2&quot;,
+        &quot;srcDevTypeDefineId&quot;: null,
+        &quot;devTypeDefineId&quot;: 255,
+        &quot;devTypeDefineName&quot;: &quot;消火栓按钮&quot;,
+        &quot;cmd&quot;: &quot;10,20,30&quot;
+    },
+    &quot;success&quot;: true,
+    &quot;fail&quot;: false
+}</code></pre></table>
+<p><strong>返回参数说明</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+<p><strong>备注</strong> </p>
+<ul>
+<li>更多返回错误代码请看首页的错误代码描述</li>
+</ul>
+<p>欢迎使用ShowDoc！</p></div><h2>8、远控设备类型配置列表</h2><div style="margin-left:20px;"><p><strong>简要描述：</strong> </p>
+<ul>
+<li>远控设备类型配置列表</li>
+</ul>
+<p><strong>请求URL：</strong> </p>
+<ul>
+<li><code>http://localhost:8088/webDeviceRemoteCommand/queryByPage</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST </li>
+</ul>
+<p><strong>参数：</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">pageNum</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">int</td>
+<td>页数</td>
+</tr>
+</tbody>
+</table>
+<table width='100%' class='codestyle'><pre><code>{
+    &quot;pageNum&quot;: 1
+}</code></pre></table>
+<p><strong>返回示例</strong></p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+<table width='100%' class='codestyle'><pre><code>{
+    &quot;code&quot;: 200,
+    &quot;msg&quot;: &quot;查询成功&quot;,
+    &quot;data&quot;: {
+        &quot;pageNum&quot;: 1,
+        &quot;pageSize&quot;: 10,
+        &quot;dataCount&quot;: 1,
+        &quot;totalPage&quot;: 1,
+        &quot;startRow&quot;: 0,
+        &quot;pageData&quot;: [
+            {
+                &quot;pageNum&quot;: 1,
+                &quot;pageSize&quot;: 10,
+                &quot;supervisorPath&quot;: null,
+                &quot;dataBaseName&quot;: null,
+                &quot;startRow&quot;: null,
+                &quot;id&quot;: 3603140548205360,
+                &quot;devFirmName&quot;: &quot;北大青鸟消防设备有限公司&quot;,
+                &quot;devFirm&quot;: &quot;S000101&quot;,
+                &quot;devFirmModel&quot;: &quot;PTCGD&quot;,
+                &quot;deviceModel&quot;: &quot;JY-KBR2&quot;,
+                &quot;systemDefineld&quot;: null,
+                &quot;targetDevTypeDefineId&quot;: 255,
+                &quot;targetDevTypeDefineName&quot;: &quot;消火栓按钮&quot;,
+                &quot;cmd&quot;: &quot;10,20,30&quot;,
+                &quot;cmdDict&quot;: [
+                    {
+                        &quot;id&quot;: 23041805,
+                        &quot;value&quot;: &quot;10&quot;,
+                        &quot;label&quot;: &quot;启动&quot;,
+                        &quot;map_key&quot;: &quot;remoteControlCommand&quot;,
+                        &quot;description&quot;: &quot;远控指令&quot;,
+                        &quot;sort&quot;: 1,
+                        &quot;create_by&quot;: &quot;1&quot;,
+                        &quot;create_date&quot;: &quot;2024-02-22 08:00:00&quot;,
+                        &quot;update_by&quot;: &quot;1&quot;,
+                        &quot;update_date&quot;: &quot;2024-02-22 08:00:00&quot;,
+                        &quot;remarks&quot;: &quot;10&quot;,
+                        &quot;imgPath&quot;: null,
+                        &quot;deleted&quot;: &quot;0&quot;,
+                        &quot;parentId&quot;: 0,
+                        &quot;isChild&quot;: null,
+                        &quot;list&quot;: null
+                    },
+                    {
+                        &quot;id&quot;: 23041806,
+                        &quot;value&quot;: &quot;20&quot;,
+                        &quot;label&quot;: &quot;停止&quot;,
+                        &quot;map_key&quot;: &quot;remoteControlCommand&quot;,
+                        &quot;description&quot;: &quot;远控指令&quot;,
+                        &quot;sort&quot;: 1,
+                        &quot;create_by&quot;: &quot;1&quot;,
+                        &quot;create_date&quot;: &quot;2024-02-22 08:00:00&quot;,
+                        &quot;update_by&quot;: &quot;1&quot;,
+                        &quot;update_date&quot;: &quot;2024-02-22 08:00:00&quot;,
+                        &quot;remarks&quot;: &quot;20&quot;,
+                        &quot;imgPath&quot;: null,
+                        &quot;deleted&quot;: &quot;0&quot;,
+                        &quot;parentId&quot;: 0,
+                        &quot;isChild&quot;: null,
+                        &quot;list&quot;: null
+                    },
+                    {
+                        &quot;id&quot;: 23041807,
+                        &quot;value&quot;: &quot;30&quot;,
+                        &quot;label&quot;: &quot;消音&quot;,
+                        &quot;map_key&quot;: &quot;remoteControlCommand&quot;,
+                        &quot;description&quot;: &quot;远控指令&quot;,
+                        &quot;sort&quot;: 1,
+                        &quot;create_by&quot;: &quot;1&quot;,
+                        &quot;create_date&quot;: &quot;2024-02-22 08:00:00&quot;,
+                        &quot;update_by&quot;: &quot;1&quot;,
+                        &quot;update_date&quot;: &quot;2024-02-22 08:00:00&quot;,
+                        &quot;remarks&quot;: &quot;30&quot;,
+                        &quot;imgPath&quot;: null,
+                        &quot;deleted&quot;: &quot;0&quot;,
+                        &quot;parentId&quot;: 0,
+                        &quot;isChild&quot;: null,
+                        &quot;list&quot;: null
+                    }
+                ]
+            }
+        ]
+    },
+    &quot;success&quot;: true,
+    &quot;fail&quot;: false
+}</code></pre></table>
+<p><strong>返回参数说明</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+<p><strong>备注</strong> </p>
+<ul>
+<li>更多返回错误代码请看首页的错误代码描述</li>
+</ul>
+<p>欢迎使用ShowDoc！</p></div><h2>9、远控设备类型配置详情</h2><div style="margin-left:20px;"><p><strong>简要描述：</strong> </p>
+<ul>
+<li>远控设备类型配置详情</li>
+</ul>
+<p><strong>请求URL：</strong> </p>
+<ul>
+<li><code>http://localhost:8088/webDeviceRemoteCommand/queryById?id=3603140548205360</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST </li>
+</ul>
+<p><strong>参数：</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>id</td>
+</tr>
+</tbody>
+</table>
+<table width='100%' class='codestyle'><pre><code></code></pre></table>
+<p><strong>返回示例</strong></p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+<p><strong>返回参数说明</strong> </p>
+<table width='100%' class='codestyle'><pre><code>{
+    &quot;code&quot;: 200,
+    &quot;msg&quot;: &quot;查询成功&quot;,
+    &quot;data&quot;: {
+        &quot;pageNum&quot;: 1,
+        &quot;pageSize&quot;: 10,
+        &quot;supervisorPath&quot;: null,
+        &quot;dataBaseName&quot;: null,
+        &quot;startRow&quot;: null,
+        &quot;id&quot;: 3603140548205360,
+        &quot;devFirmName&quot;: &quot;北大青鸟消防设备有限公司&quot;,
+        &quot;devFirm&quot;: &quot;S000101&quot;,
+        &quot;devFirmModel&quot;: &quot;PTCGD&quot;,
+        &quot;deviceModel&quot;: &quot;JY-KBR2&quot;,
+        &quot;systemDefineld&quot;: 173,
+        &quot;targetDevTypeDefineId&quot;: 255,
+        &quot;targetDevTypeDefineName&quot;: &quot;消火栓按钮&quot;,
+        &quot;cmd&quot;: &quot;10,20,30&quot;,
+        &quot;cmdDict&quot;: [
+            {
+                &quot;id&quot;: 23041805,
+                &quot;value&quot;: &quot;10&quot;,
+                &quot;label&quot;: &quot;启动&quot;,
+                &quot;map_key&quot;: &quot;remoteControlCommand&quot;,
+                &quot;description&quot;: &quot;远控指令&quot;,
+                &quot;sort&quot;: 1,
+                &quot;create_by&quot;: &quot;1&quot;,
+                &quot;create_date&quot;: &quot;2024-02-22 08:00:00&quot;,
+                &quot;update_by&quot;: &quot;1&quot;,
+                &quot;update_date&quot;: &quot;2024-02-22 08:00:00&quot;,
+                &quot;remarks&quot;: &quot;10&quot;,
+                &quot;imgPath&quot;: null,
+                &quot;deleted&quot;: &quot;0&quot;,
+                &quot;parentId&quot;: 0,
+                &quot;isChild&quot;: null,
+                &quot;list&quot;: null
+            },
+            {
+                &quot;id&quot;: 23041806,
+                &quot;value&quot;: &quot;20&quot;,
+                &quot;label&quot;: &quot;停止&quot;,
+                &quot;map_key&quot;: &quot;remoteControlCommand&quot;,
+                &quot;description&quot;: &quot;远控指令&quot;,
+                &quot;sort&quot;: 1,
+                &quot;create_by&quot;: &quot;1&quot;,
+                &quot;create_date&quot;: &quot;2024-02-22 08:00:00&quot;,
+                &quot;update_by&quot;: &quot;1&quot;,
+                &quot;update_date&quot;: &quot;2024-02-22 08:00:00&quot;,
+                &quot;remarks&quot;: &quot;20&quot;,
+                &quot;imgPath&quot;: null,
+                &quot;deleted&quot;: &quot;0&quot;,
+                &quot;parentId&quot;: 0,
+                &quot;isChild&quot;: null,
+                &quot;list&quot;: null
+            },
+            {
+                &quot;id&quot;: 23041807,
+                &quot;value&quot;: &quot;30&quot;,
+                &quot;label&quot;: &quot;消音&quot;,
+                &quot;map_key&quot;: &quot;remoteControlCommand&quot;,
+                &quot;description&quot;: &quot;远控指令&quot;,
+                &quot;sort&quot;: 1,
+                &quot;create_by&quot;: &quot;1&quot;,
+                &quot;create_date&quot;: &quot;2024-02-22 08:00:00&quot;,
+                &quot;update_by&quot;: &quot;1&quot;,
+                &quot;update_date&quot;: &quot;2024-02-22 08:00:00&quot;,
+                &quot;remarks&quot;: &quot;30&quot;,
+                &quot;imgPath&quot;: null,
+                &quot;deleted&quot;: &quot;0&quot;,
+                &quot;parentId&quot;: 0,
+                &quot;isChild&quot;: null,
+                &quot;list&quot;: null
+            }
+        ]
+    },
+    &quot;success&quot;: true,
+    &quot;fail&quot;: false
+}</code></pre></table>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+<p><strong>备注</strong> </p>
+<ul>
+<li>更多返回错误代码请看首页的错误代码描述</li>
+</ul>
+<p>欢迎使用ShowDoc！</p></div><h2>10、修改远控设备类型配置</h2><div style="margin-left:20px;"><p><strong>简要描述：</strong> </p>
+<ul>
+<li>修改远控设备类型配置</li>
+</ul>
+<p><strong>请求URL：</strong> </p>
+<ul>
+<li><code>http://localhost:8088/webDeviceRemoteCommand/edit</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST </li>
+</ul>
+<p><strong>参数：</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">long</td>
+<td>id</td>
+</tr>
+<tr>
+<td style="text-align: left;">devFirmName</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>厂商设备名称</td>
+</tr>
+<tr>
+<td style="text-align: left;">devFirm</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>厂商设备Key(对应字典表)</td>
+</tr>
+<tr>
+<td style="text-align: left;">devFirmModel</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>厂商设备型号</td>
+</tr>
+<tr>
+<td style="text-align: left;">systemDefineld</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>系统类型</td>
+</tr>
+<tr>
+<td style="text-align: left;">deviceModel</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>设备型号</td>
+</tr>
+<tr>
+<td style="text-align: left;">targetDevTypeDefineId</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">long</td>
+<td>设备类型id</td>
+</tr>
+<tr>
+<td style="text-align: left;">targetDevTypeDefineName</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>设备类型名称</td>
+</tr>
+<tr>
+<td style="text-align: left;">cmd</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>支持的远程控制指令，用逗号连接多个指令（字典表管理）</td>
+</tr>
+</tbody>
+</table>
+<table width='100%' class='codestyle'><pre><code>{
+    &quot;id&quot;: 3603140548205360,
+    &quot;devFirmModel&quot;: &quot;PPPSD&quot;,
+    &quot;cmd&quot; : &quot;30,50,80&quot;
+}</code></pre></table>
+<p><strong>返回示例</strong></p>
+<table width='100%' class='codestyle'><pre><code>{
+    &quot;code&quot;: 200,
+    &quot;msg&quot;: &quot;修改成功&quot;,
+    &quot;data&quot;: {
+        &quot;pageNum&quot;: 1,
+        &quot;pageSize&quot;: 10,
+        &quot;supervisorPath&quot;: null,
+        &quot;dataBaseName&quot;: null,
+        &quot;startRow&quot;: null,
+        &quot;id&quot;: 3603140548205360,
+        &quot;devFirmName&quot;: &quot;北大青鸟消防设备有限公司&quot;,
+        &quot;devFirm&quot;: &quot;S000101&quot;,
+        &quot;devFirmModel&quot;: &quot;PPPSD&quot;,
+        &quot;deviceModel&quot;: &quot;JY-KBR2&quot;,
+        &quot;systemDefineld&quot;: 173,
+        &quot;targetDevTypeDefineId&quot;: 255,
+        &quot;targetDevTypeDefineName&quot;: &quot;消火栓按钮&quot;,
+        &quot;cmd&quot;: &quot;30,50,80&quot;,
+        &quot;cmdDict&quot;: null
+    },
+    &quot;success&quot;: true,
+    &quot;fail&quot;: false
+}</code></pre></table>
+<p><strong>返回参数说明</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+<p><strong>备注</strong> </p>
+<ul>
+<li>更多返回错误代码请看首页的错误代码描述</li>
+</ul>
+<p>欢迎使用ShowDoc！</p></div><h2>11、删除远控设备类型配置</h2><div style="margin-left:20px;"><p><strong>简要描述：</strong> </p>
+<ul>
+<li>删除远控设备类型配置</li>
+</ul>
+<p><strong>请求URL：</strong> </p>
+<ul>
+<li><code>http://localhost:8088/webDeviceRemoteCommand/deleteById</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST </li>
+</ul>
+<p><strong>参数：</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">long</td>
+<td>id</td>
+</tr>
+</tbody>
+</table>
+<table width='100%' class='codestyle'><pre><code>{
+    &quot;id&quot;: 3603140548205360
+}</code></pre></table>
+<p><strong>返回示例</strong></p>
+<table width='100%' class='codestyle'><pre><code>{
+    &quot;code&quot;: 200,
+    &quot;msg&quot;: &quot;删除成功&quot;,
+    &quot;data&quot;: true,
+    &quot;success&quot;: true,
+    &quot;fail&quot;: false
+}</code></pre></table>
+<p><strong>返回参数说明</strong> </p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+<p><strong>备注</strong> </p>
+<ul>
+<li>更多返回错误代码请看首页的错误代码描述</li>
+</ul>
+<p>欢迎使用ShowDoc！</p></div></div></body></html>
